@@ -1,0 +1,4 @@
+#! /bin/sh
+# n -- next music
+# see also: m s
+pkill mplayer
