@@ -2,10 +2,10 @@
 which certbot | grep '/certbot$' -q && \
     sudo certbot certificates
 
-my_domain=''; echo
-read -p 'Input your domain name: ' my_domain
-
 function do_setup() {
+    local my_domain=''; echo
+    read -p 'Input your domain name: ' my_domain
+
     if [ -z "$my_domain" ]; then
         echo "No domain name provided, exit ..."
         return
@@ -27,6 +27,16 @@ function do_setup() {
 
     sudo certbot --nginx certonly -d $my_domain
     sudo certbot certificates
-}
 
+    # Modify the nginx web root dir
+    local web_root_key='root /var/www/html;'
+    local web_config_file='/etc/nginx/sites-available/default'
+    grep "$web_root_key" $web_config_file -q && \
+        sudo sed -i "s:$web_root_key:root $HOME/kross-fisher; #feixy:" $web_config_file
+
+    # Modify the nginx user to root
+    sudo sed -i 's/^user www-data;/user root; #&/' /etc/nginx/nginx.conf
+
+    sudo nginx -s reload  # Reload nginx
+}
 do_setup
