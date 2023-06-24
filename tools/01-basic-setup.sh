@@ -1,10 +1,9 @@
 
 if [ ! -d ~/fishes ]; then
-    cd && git clone git@github.com:kross-fisher/fishes.git
+    cd; git clone git@github.com:kross-fisher/fishes.git; cd -
 fi
-
 if [ ! -d ~/kross-fisher ]; then
-    cd && git clone git@github.com:kross-fisher/kross-fisher.github.io.git kross-fisher
+    cd; git clone git@github.com:kross-fisher/kross-fisher.github.io.git kross-fisher; cd -
 fi
 
 sudo apt update

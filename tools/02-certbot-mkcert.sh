@@ -1,5 +1,8 @@
 
-my_domain=''
+which certbot | grep '/certbot$' -q && \
+    sudo certbot certificates
+
+my_domain=''; echo
 read -p 'Input your domain name: ' my_domain
 
 function do_setup() {
